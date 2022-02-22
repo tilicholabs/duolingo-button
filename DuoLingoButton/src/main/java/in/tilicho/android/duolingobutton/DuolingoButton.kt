@@ -105,10 +105,10 @@ class DuolingoButton @JvmOverloads constructor(
         }
 
     @ColorInt
-    var buttonTextColor: Int = R.color.black
+    var buttonTextColor: Int = ContextCompat.getColor(context,R.color.black)//resources.getColor(R.color.black,context.theme)
         set(value) {
             field = value
-            binding.buttonTextView.setTextColor(ContextCompat.getColor(context, value))
+            binding.buttonTextView.setTextColor(value)
         }
 
     var buttonRadius: Int = 12
@@ -118,14 +118,14 @@ class DuolingoButton @JvmOverloads constructor(
         }
 
     @ColorInt
-    var buttonPrimaryColor: Int = R.color.colorDefaultPrimary
+    var buttonPrimaryColor: Int = ContextCompat.getColor(context,R.color.colorDefaultPrimary)//R.color.colorDefaultPrimary
         set(value) {
             field = value
             setTopBackgroundColor(buttonPrimaryColor)
         }
 
     @ColorInt
-    var buttonShadowColor: Int = R.color.colorDefaultShadow
+    var buttonShadowColor: Int = ContextCompat.getColor(context,R.color.colorDefaultShadow)//R.color.colorDefaultShadow
         set(value) {
             field = value
             setBackgroundShadowColor(value)
@@ -466,11 +466,11 @@ class DuolingoButton @JvmOverloads constructor(
     private fun parseCustomAttributes(attrs: AttributeSet?) {
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.DuolingoButton)
         try {
-            /*textpaddingStart = typedArray.getInt(
+            textpaddingStart = typedArray.getInt(
                 R.styleable.DuolingoButton_textPaddingStart,
                 binding.buttonTextLayout.paddingLeft
-            )*/
-            /*textpaddingEnd = typedArray.getInt(
+            )
+            textpaddingEnd = typedArray.getInt(
                 R.styleable.DuolingoButton_textPaddingEnd,
                 binding.buttonTextLayout.paddingEnd
             )
@@ -486,37 +486,36 @@ class DuolingoButton @JvmOverloads constructor(
                 typedArray.getString(R.styleable.DuolingoButton_android_text).toString()
 
             buttonTextSize = typedArray.getFloat(
-                R.styleable.DuolingoButton_android_textSize,
+                R.styleable.DuolingoButton_textSize,
                 pixelsToSpi(24)
             )
 
-           *//* buttonTextColor = typedArray.getColor(
+            buttonTextColor = typedArray.getColor(
                 R.styleable.DuolingoButton_android_textColor,
                 ContextCompat.getColor(context, R.color.black)
-            )*//*
+            )
 
             buttonRadius = typedArray.getInteger(
-                R.styleable.DuolingoButton_android_buttonCornerRadius,
+                R.styleable.DuolingoButton_buttonCornerRadius,
                 12
             )
 
-           *//* buttonPrimaryColor = typedArray.getResourceId(
+            buttonPrimaryColor = typedArray.getResourceId(
                 R.styleable.DuolingoButton_primaryColor,
                 R.color.colorDefaultPrimary
             )
             buttonShadowColor = typedArray.getResourceId(
                 R.styleable.DuolingoButton_shadowColor,
                 R.color.colorDefaultShadow
-            )*//*
+            )
             //widthMatchParent = typedArray.getBoolean(R.styleable.DuolingoButton_ctaFullButton,false)
 
-//            buttonIcon =
-//                typedArray.getResourceId(
-//                    R.styleable.DuolingoButton_icon,
-//                    R.drawable.drawable_background_with_shadow
-//                )
+            buttonIcon =
+                typedArray.getResourceId(
+                    R.styleable.DuolingoButton_icon,
+                    R.drawable.drawable_background_with_shadow
+                )
             iconSpacer = typedArray.getInteger(R.styleable.DuolingoButton_iconSpacer, 8)
-*/
         } finally {
             typedArray.recycle()
         }

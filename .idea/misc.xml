@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="DuoLingoButton/src/main/res/drawable/drawable_background_without_shadow.xml" value="0.14270833333333333" />
+        <entry key="DuoLingoButton/src/main/res/layout/view_duolingo_button.xml" value="0.1265625" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.10461956521739131" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>

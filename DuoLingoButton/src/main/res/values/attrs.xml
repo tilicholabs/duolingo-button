@@ -8,12 +8,13 @@
         <attr name="textPaddingBottom" format="integer" />
 
         <attr name="android:text" />
-        <attr name="android:textSize" format="float" />
+        <attr name="textSize" format="float" />
         <attr name="android:textColor" format="color" />
-        <attr name="android:buttonCornerRadius" format="integer" />
+        <attr name="buttonCornerRadius" format="integer" />
         <attr name="primaryColor" format="reference" />
         <attr name="shadowColor" format="reference" />
         <attr name="icon" format="reference" />
         <attr name="iconSpacer" format="integer" />
+
     </declare-styleable>
 </resources>
