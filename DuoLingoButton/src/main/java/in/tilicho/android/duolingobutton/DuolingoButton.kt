@@ -24,7 +24,6 @@ import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
-import androidx.databinding.DataBindingUtil
 
 class DuolingoButton @JvmOverloads constructor(
     context: Context,
@@ -35,7 +34,7 @@ class DuolingoButton @JvmOverloads constructor(
     private var mButton: RelativeLayout = RelativeLayout(context)
     private var mButtonTextView: TextView = TextView(context)
     private var mProgressBar: ProgressBar = ProgressBar(context)
-    private lateinit var binding: ViewDuolingoButtonBinding
+    private var binding =  ViewDuolingoButtonBinding.inflate(LayoutInflater.from(context),this)
     val viewLifecycleOwner = CustomViewLifecycleOwner()
     private lateinit var onClickListener: CustomButtonOnClickListener
 
@@ -257,10 +256,10 @@ class DuolingoButton @JvmOverloads constructor(
 
 
     init {
-        val inflater = LayoutInflater.from(context)
+       /* val inflater = LayoutInflater.from(context)
         binding =
             DataBindingUtil.inflate(inflater, R.layout.view_duolingo_button, this, false)
-        binding.lifecycleOwner = viewLifecycleOwner
+        binding.lifecycleOwner = viewLifecycleOwner*/
 
         initDrawables()
         initBackground()
@@ -434,7 +433,9 @@ class DuolingoButton @JvmOverloads constructor(
                             binding.buttonTextLayout.paddingBottom + pixelsToDpi(4)
                         )
 
-                        onClickListener.onClicked()
+                        if(::onClickListener.isInitialized) {
+                            onClickListener.onClicked()
+                        }
                         return false;
                     }
                 }
