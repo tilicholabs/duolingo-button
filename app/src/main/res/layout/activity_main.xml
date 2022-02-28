@@ -18,6 +18,7 @@
         app:textPaddingEnd="10"
         app:textPaddingTop="10"
         app:textPaddingStart="13"
+        
         app:primaryColor="@color/colorDefaultPrimary"
         app:shadowColor="@color/colorDefaultShadow"
         android:layout_marginStart="24dp"

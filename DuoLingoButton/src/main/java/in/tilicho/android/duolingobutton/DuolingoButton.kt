@@ -2,24 +2,21 @@ package `in`.tilicho.android.duolingobutton
 
 import `in`.tilicho.android.duolingobutton.databinding.ViewDuolingoButtonBinding
 import `in`.tilicho.android.duolingobutton.interfaces.CustomButtonOnClickListener
-import `in`.tilicho.android.duolingobutton.utils.CustomViewLifecycleOwner
 import `in`.tilicho.android.duolingobutton.utils.DisplayConversionUtils
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.res.TypedArray
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.LayerDrawable
+import android.os.Build
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.widget.LinearLayout
-import android.widget.ProgressBar
 import android.widget.RelativeLayout
-import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
@@ -31,11 +28,8 @@ class DuolingoButton @JvmOverloads constructor(
     defStyle: Int = 0
 ) : RelativeLayout(context, attrs, defStyle) {
 
-    private var mButton: RelativeLayout = RelativeLayout(context)
-    private var mButtonTextView: TextView = TextView(context)
-    private var mProgressBar: ProgressBar = ProgressBar(context)
+
     private var binding =  ViewDuolingoButtonBinding.inflate(LayoutInflater.from(context),this)
-    val viewLifecycleOwner = CustomViewLifecycleOwner()
     private lateinit var onClickListener: CustomButtonOnClickListener
 
     private lateinit var backgroundTopDrawable: GradientDrawable
@@ -90,7 +84,7 @@ class DuolingoButton @JvmOverloads constructor(
             )
         }
 
-    var buttonText: String = "14"
+    var buttonText: String = ""
         set(value) {
             field = value
             binding.buttonTextView.setText(value)
@@ -109,6 +103,16 @@ class DuolingoButton @JvmOverloads constructor(
             field = value
             binding.buttonTextView.setTextColor(value)
         }
+
+    var buttonTextAppearance: Int? = null
+    set(value) {
+        field = value
+        if(value!=null){
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                binding.buttonTextView.setTextAppearance(value)
+            }
+        }
+    }
 
     var buttonRadius: Int = 12
         set(value) {
@@ -256,11 +260,6 @@ class DuolingoButton @JvmOverloads constructor(
 
 
     init {
-       /* val inflater = LayoutInflater.from(context)
-        binding =
-            DataBindingUtil.inflate(inflater, R.layout.view_duolingo_button, this, false)
-        binding.lifecycleOwner = viewLifecycleOwner*/
-
         initDrawables()
         initBackground()
         initListeners()
@@ -272,7 +271,7 @@ class DuolingoButton @JvmOverloads constructor(
             context.applicationContext,
             R.drawable.drawable_background_with_shadow
         )
-        //setDrawableTint(buttonColor)
+
         binding.buttonTextLayout.background = drawable
     }
 
@@ -285,104 +284,12 @@ class DuolingoButton @JvmOverloads constructor(
         binding.buttonTextLayout.background = ContextCompat.getDrawable(
             context,
             R.drawable.drawable_background_with_shadow
-        )//getButtonWithBackground(color)
+        )
     }
 
     fun isProgressBarVisible(): Boolean {
         return binding.loadingProgressBar.isVisible
     }
-
-    /*fun getButtonWithBackground(color: ButtonColorEnum): Drawable {
-        var drawable: Drawable? = ContextCompat.getDrawable(
-            context.applicationContext,
-            R.drawable.drawable_background_with_shadow
-        )
-        if (color == ButtonColorEnum.YELLOW) {
-            drawable = if (radiusSize == ButtonRadiusSize.MAX) {
-                ContextCompat.getDrawable(
-                    context.applicationContext,
-                    R.drawable.drawable_yellow_filled_background_with_shadow_home
-                )
-            } else {
-                ContextCompat.getDrawable(
-                    context.applicationContext,
-                    R.drawable.drawable_yellow_filled_background_with_shadow
-                )
-            }
-
-        } else if (color == ButtonColorEnum.GREEN) {
-            drawable = if (radiusSize == ButtonRadiusSize.MAX) {
-                ContextCompat.getDrawable(
-                    context.applicationContext,
-                    R.drawable.drawable_green_filled_background_with_shadow_home
-                )
-            } else {
-                ContextCompat.getDrawable(
-                    context.applicationContext,
-                    R.drawable.drawable_green_filled_background_with_shadow
-                )
-            }
-        } else if (color == ButtonColorEnum.GREY) {
-            drawable = if (radiusSize == ButtonRadiusSize.MAX) {
-                ContextCompat.getDrawable(
-                    context.applicationContext,
-                    R.drawable.drawable_grey_filled_background_with_shadow_home
-                )
-            } else {
-                ContextCompat.getDrawable(
-                    context.applicationContext,
-                    R.drawable.drawable_grey_filled_background_with_shadow
-                )
-            }
-        }
-        return drawable!!
-    }
-
-    fun getButtonWithOutBackground(color: ButtonColorEnum): Drawable {
-        var drawable: Drawable? = ContextCompat.getDrawable(
-            context.applicationContext,
-            R.drawable.drawable_yellow_filled_background_without_shadow
-        )
-        if (color == ButtonColorEnum.YELLOW) {
-            drawable = if (radiusSize == ButtonRadiusSize.MAX) {
-                ContextCompat.getDrawable(
-                    context.applicationContext,
-                    R.drawable.drawable_yellow_filled_background_without_shadow_home
-                )
-            } else {
-                ContextCompat.getDrawable(
-                    context.applicationContext,
-                    R.drawable.drawable_yellow_filled_background_without_shadow
-                )
-            }
-
-        } else if (color == ButtonColorEnum.GREEN) {
-            drawable = if (radiusSize == ButtonRadiusSize.MAX) {
-                ContextCompat.getDrawable(
-                    context.applicationContext,
-                    R.drawable.drawable_green_filled_background_without_shadow_home
-                )
-            } else {
-                ContextCompat.getDrawable(
-                    context.applicationContext,
-                    R.drawable.drawable_green_filled_background_without_shadow
-                )
-            }
-        } else if (color == ButtonColorEnum.GREY) {
-            drawable = if (radiusSize == ButtonRadiusSize.MAX) {
-                ContextCompat.getDrawable(
-                    context.applicationContext,
-                    R.drawable.drawable_grey_filled_background_without_shadow_home
-                )
-            } else {
-                ContextCompat.getDrawable(
-                    context.applicationContext,
-                    R.drawable.drawable_grey_filled_background_without_shadow
-                )
-            }
-        }
-        return drawable!!
-    }*/
 
     @SuppressLint("ClickableViewAccessibility")
     private fun initListeners() {
@@ -517,6 +424,8 @@ class DuolingoButton @JvmOverloads constructor(
                     R.drawable.drawable_background_with_shadow
                 )
             iconSpacer = typedArray.getInteger(R.styleable.DuolingoButton_iconSpacer, 8)
+
+            buttonTextAppearance = typedArray.getResourceId(R.styleable.DuolingoButton_textAppearance,R.style.TextAppearance_AppCompat)
         } finally {
             typedArray.recycle()
         }
