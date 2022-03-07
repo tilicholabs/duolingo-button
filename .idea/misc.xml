@@ -3,9 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../../layout/custom_preview.xml" value="0.21041666666666667" />
         <entry key="DuoLingoButton/src/main/res/drawable/drawable_background_without_shadow.xml" value="0.14270833333333333" />
         <entry key="DuoLingoButton/src/main/res/layout/view_duolingo_button.xml" value="0.1265625" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.10461956521739131" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.375" />
       </map>
     </option>
   </component>

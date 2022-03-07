@@ -2,7 +2,7 @@ package `in`.tilicho.android.duolingobutton
 
 import `in`.tilicho.android.duolingobutton.databinding.ViewDuolingoButtonBinding
 import `in`.tilicho.android.duolingobutton.interfaces.CustomButtonOnClickListener
-import `in`.tilicho.android.duolingobutton.utils.DisplayConversionUtils
+import `in`.tilicho.android.duolingobutton.utils.dp2Px
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
@@ -29,7 +29,7 @@ class DuolingoButton @JvmOverloads constructor(
 ) : RelativeLayout(context, attrs, defStyle) {
 
 
-    private var binding =  ViewDuolingoButtonBinding.inflate(LayoutInflater.from(context),this)
+    private var binding = ViewDuolingoButtonBinding.inflate(LayoutInflater.from(context), this)
     private lateinit var onClickListener: CustomButtonOnClickListener
 
     private lateinit var backgroundTopDrawable: GradientDrawable
@@ -98,21 +98,22 @@ class DuolingoButton @JvmOverloads constructor(
         }
 
     @ColorInt
-    var buttonTextColor: Int = ContextCompat.getColor(context,R.color.black)//resources.getColor(R.color.black,context.theme)
+    var buttonTextColor: Int = ContextCompat.getColor(context, R.color.black)
+        //resources.getColor(R.color.black,context.theme)
         set(value) {
             field = value
             binding.buttonTextView.setTextColor(value)
         }
 
     var buttonTextAppearance: Int? = null
-    set(value) {
-        field = value
-        if(value!=null){
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                binding.buttonTextView.setTextAppearance(value)
+        set(value) {
+            field = value
+            if (value != null) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    binding.buttonTextView.setTextAppearance(value)
+                }
             }
         }
-    }
 
     var buttonRadius: Int = 12
         set(value) {
@@ -121,14 +122,16 @@ class DuolingoButton @JvmOverloads constructor(
         }
 
     @ColorInt
-    var buttonPrimaryColor: Int = ContextCompat.getColor(context,R.color.colorDefaultPrimary)//R.color.colorDefaultPrimary
+    var buttonPrimaryColor: Int = ContextCompat.getColor(context, R.color.colorDefaultPrimary)
+        //R.color.colorDefaultPrimary
         set(value) {
             field = value
             setTopBackgroundColor(buttonPrimaryColor)
         }
 
     @ColorInt
-    var buttonShadowColor: Int = ContextCompat.getColor(context,R.color.colorDefaultShadow)//R.color.colorDefaultShadow
+    var buttonShadowColor: Int = ContextCompat.getColor(context, R.color.colorDefaultShadow)
+        //R.color.colorDefaultShadow
         set(value) {
             field = value
             setBackgroundShadowColor(value)
@@ -164,7 +167,7 @@ class DuolingoButton @JvmOverloads constructor(
 
     private fun setImageSpacer(value: Int) {
         val layoutParams = binding.buttonIcon.layoutParams as LinearLayout.LayoutParams
-        layoutParams.marginEnd = DisplayConversionUtils.dpToPx(context, value.toFloat()).toInt()
+        layoutParams.marginEnd = context.dp2Px(value).toInt()
         binding.buttonIcon.layoutParams = layoutParams
     }
 
@@ -178,7 +181,7 @@ class DuolingoButton @JvmOverloads constructor(
 
 
     private fun setCornerRadius(value: Int) {
-        val valueInDp = DisplayConversionUtils.dpToPx(context, value.toFloat())
+        val valueInDp = context.dp2Px(value).toFloat()
         backgroundBottomDrawable.cornerRadius = valueInDp
         backgroundTopDrawable.cornerRadius = valueInDp
     }
@@ -235,13 +238,13 @@ class DuolingoButton @JvmOverloads constructor(
 
         val changedBackground = (shape.findDrawableByLayerId(R.id.top_drawable) as GradientDrawable)
         changedBackground.setColor(Color.parseColor(topColor))
-        changedBackground.cornerRadius = DisplayConversionUtils.dpToPx(context, cornerRadius)
+        changedBackground.cornerRadius = context.dp2Px(cornerRadius.toInt()).toFloat()
 
         val updatedBackground =
             (shape.findDrawableByLayerId(R.id.bottom_drawable) as GradientDrawable)
         updatedBackground.setColor(Color.parseColor(bottomColor))
 
-        updatedBackground.cornerRadius = DisplayConversionUtils.dpToPx(context, cornerRadius)
+        updatedBackground.cornerRadius = context.dp2Px(cornerRadius.toInt()).toFloat()
 
         binding.buttonTextLayout.background =
             ContextCompat.getDrawable(context, R.drawable.drawable_background_with_shadow)
@@ -254,7 +257,7 @@ class DuolingoButton @JvmOverloads constructor(
         val normalChangedBackground =
             (normalDrawable.findDrawableByLayerId(R.id.top_drawable) as GradientDrawable)
         normalChangedBackground.setColor(Color.parseColor(topColor))
-        normalChangedBackground.cornerRadius = DisplayConversionUtils.dpToPx(context, cornerRadius)
+        normalChangedBackground.cornerRadius = context.dp2Px(cornerRadius.toInt()).toFloat()
 
     }
 
@@ -340,7 +343,7 @@ class DuolingoButton @JvmOverloads constructor(
                             binding.buttonTextLayout.paddingBottom + pixelsToDpi(4)
                         )
 
-                        if(::onClickListener.isInitialized) {
+                        if (::onClickListener.isInitialized) {
                             onClickListener.onClicked()
                         }
                         return false;
@@ -425,7 +428,10 @@ class DuolingoButton @JvmOverloads constructor(
                 )
             iconSpacer = typedArray.getInteger(R.styleable.DuolingoButton_iconSpacer, 8)
 
-            buttonTextAppearance = typedArray.getResourceId(R.styleable.DuolingoButton_textAppearance,R.style.TextAppearance_AppCompat)
+            buttonTextAppearance = typedArray.getResourceId(
+                R.styleable.DuolingoButton_textAppearance,
+                R.style.TextAppearance_AppCompat
+            )
         } finally {
             typedArray.recycle()
         }
