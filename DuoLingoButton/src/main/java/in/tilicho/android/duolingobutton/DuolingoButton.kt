@@ -20,6 +20,7 @@ import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 
@@ -93,7 +94,7 @@ class DuolingoButton @JvmOverloads constructor(
     var buttonTextSize: Float = 4.toFloat()
         set(value) {
             field = value
-            binding.buttonTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP,value)
+            binding.buttonTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, value)
         }
 
     @ColorInt
@@ -341,26 +342,6 @@ class DuolingoButton @JvmOverloads constructor(
         })
     }
 
-    fun convertSpToPixels(sp: Float, context: Context): Float {
-        return TypedValue.applyDimension(
-            TypedValue.COMPLEX_UNIT_SP,
-            sp,
-            context.resources.displayMetrics
-        )
-    }
-
-    fun dpToPx(pixel: Int): Int {
-        //final float scale = getResources().getDisplayMetrics().density;
-        val scale = context.resources.displayMetrics.density
-        return (pixel * scale + 0.5f).toInt()
-    }
-
-    fun pixelsToSpi(pixel: Int): Float {
-        val scale = context.resources.displayMetrics.density
-        return pixel / scale
-    }
-
-
     private fun parseCustomAttributes(attrs: AttributeSet?) {
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.DuolingoButton)
         try {
@@ -425,14 +406,7 @@ class DuolingoButton @JvmOverloads constructor(
         this.onClickListener = onClickListener
     }
 
-    fun setButtonTitle(title: String) {
-        binding.buttonTextView.setText(title)
-    }
-
-
-    fun getButtonTitle(): String {
-        return binding.buttonTextView.text.toString()
-    }
+    fun getButtonTitle(): String = binding.buttonTextView.text.toString()
 
     fun showProgressBar() {
         binding.buttonTextView.visibility = INVISIBLE
@@ -443,5 +417,7 @@ class DuolingoButton @JvmOverloads constructor(
         binding.buttonTextView.visibility = VISIBLE
         binding.loadingProgressBar.visibility = GONE
     }
+
+    fun getTextView(): AppCompatTextView = binding.buttonTextView
 
 }
