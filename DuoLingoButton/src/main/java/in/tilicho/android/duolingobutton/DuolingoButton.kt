@@ -33,15 +33,14 @@ class DuolingoButton @JvmOverloads constructor(
     private var binding = ViewDuolingoButtonBinding.inflate(LayoutInflater.from(context), this)
     private lateinit var onClickListener: CustomButtonOnClickListener
 
+    // Gradient drawables of background layer-list's
     private lateinit var shadowBackgroundTopDrawable: GradientDrawable
-
     private lateinit var shadowBackgroundBottomDrawable: GradientDrawable
-
     private lateinit var backgroundNormalDrawable: GradientDrawable
 
+    // Drawables to LayerDrawable to update the color of background
     private lateinit var shadowBackgroundLayerDrawable: LayerDrawable
     private lateinit var backgroundLayerDrawable: LayerDrawable
-
 
     var textpaddingStart: Int = 0
         set(value) {
@@ -143,13 +142,13 @@ class DuolingoButton @JvmOverloads constructor(
         set(value) {
             field = value
             if (value != null && value != R.drawable.drawable_background_with_shadow) {
-                setCtaButtonIcon(value)
+                setButtonIcon(value)
             } else {
                 binding.buttonIcon.visibility = View.GONE
             }
         }
 
-    private fun setCtaButtonIcon(value: Int) {
+    private fun setButtonIcon(value: Int) {
         binding.buttonIcon.visibility = View.VISIBLE
         binding.buttonIcon.setImageResource(value)
     }
@@ -189,22 +188,15 @@ class DuolingoButton @JvmOverloads constructor(
         binding.buttonTextLayout.background = shadowBackgroundLayerDrawable
     }
 
-    fun setShadowBackground(){
+    private fun setShadowBackground() {
         shadowBackgroundBottomDrawable.setColor(ContextCompat.getColor(context, buttonShadowColor))
         shadowBackgroundTopDrawable.setColor(ContextCompat.getColor(context, buttonPrimaryColor))
         binding.buttonTextLayout.background = shadowBackgroundLayerDrawable
     }
 
-    private fun setNormalBackground(){
+    private fun setNormalBackground() {
         backgroundNormalDrawable.setColor(ContextCompat.getColor(context, buttonPrimaryColor))
         binding.buttonTextLayout.background = backgroundLayerDrawable
-    }
-
-    private fun setRelevantBackground() {
-        shadowBackgroundTopDrawable.setColor(buttonPrimaryColor)
-        backgroundNormalDrawable.setColor(buttonPrimaryColor)
-        shadowBackgroundBottomDrawable.setColor(buttonShadowColor)
-        setCornerRadius(buttonRadius)
     }
 
     private fun initDrawables() {
@@ -214,7 +206,8 @@ class DuolingoButton @JvmOverloads constructor(
                 R.drawable.drawable_background_with_shadow
             ) as LayerDrawable
 
-        shadowBackgroundTopDrawable = (shadowBackgroundLayerDrawable.findDrawableByLayerId(R.id.top_drawable) as GradientDrawable)
+        shadowBackgroundTopDrawable =
+            (shadowBackgroundLayerDrawable.findDrawableByLayerId(R.id.top_drawable) as GradientDrawable)
         shadowBackgroundBottomDrawable =
             (shadowBackgroundLayerDrawable.findDrawableByLayerId(R.id.bottom_drawable) as GradientDrawable)
 
@@ -228,7 +221,7 @@ class DuolingoButton @JvmOverloads constructor(
 
     }
 
-    fun changeDrawableColor(topColor: String, bottomColor: String, cornerRadius: Float) {
+    fun updateBackgroundConstraints(topColor: String, bottomColor: String, cornerRadius: Float) {
         val shape =
             ContextCompat.getDrawable(
                 context,
@@ -276,18 +269,6 @@ class DuolingoButton @JvmOverloads constructor(
         binding.buttonTextLayout.background = drawable
     }
 
-
-    fun setTextStartDrawable(drawable: Drawable) {
-        binding.buttonTextView.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null)
-    }
-
-    fun setDrawable() {
-        binding.buttonTextLayout.background = ContextCompat.getDrawable(
-            context,
-            R.drawable.drawable_background_with_shadow
-        )
-    }
-
     fun isProgressBarVisible(): Boolean {
         return binding.loadingProgressBar.isVisible
     }
@@ -296,7 +277,6 @@ class DuolingoButton @JvmOverloads constructor(
     private fun initListeners() {
         binding.buttonTextLayout.setOnTouchListener(object : OnTouchListener {
             override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-                setRelevantBackground()
                 when (event!!.action) {
                     MotionEvent.ACTION_DOWN -> {
 
@@ -334,10 +314,14 @@ class DuolingoButton @JvmOverloads constructor(
                             binding.buttonTextLayout.paddingBottom + context.dpToPx(4F)
                         )
 
-                        if (::onClickListener.isInitialized) {
+                        if (::onClickListener.isInitialized && !isProgressBarVisible()) {
                             onClickListener.onClicked()
                         }
                         return false
+                    }
+
+                    MotionEvent.ACTION_MOVE -> {
+                        setNormalBackground()
                     }
                 }
                 return false
