@@ -2,3 +2,14 @@
 *.bin
 *.lock
 .idea/misc.xml
+.gradle/7.0.2/executionHistory/executionHistory.bin
+.gradle/7.0.2/executionHistory/executionHistory.lock
+.gradle/7.0.2/fileHashes/fileHashes.bin
+.gradle/7.0.2/fileHashes/fileHashes.lock
+.gradle/7.0.2/fileHashes/resourceHashesCache.bin
+.gradle/7.0.2/javaCompile/classAnalysis.bin
+.gradle/7.0.2/javaCompile/jarAnalysis.bin
+.gradle/7.0.2/javaCompile/javaCompile.lock
+.gradle/7.0.2/javaCompile/taskHistory.bin
+.gradle/buildOutputCleanup/buildOutputCleanup.lock
+.gradle/buildOutputCleanup/outputFiles.bin

@@ -10,7 +10,6 @@ import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.LayerDrawable
-import android.os.Build
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -34,11 +33,14 @@ class DuolingoButton @JvmOverloads constructor(
     private var binding = ViewDuolingoButtonBinding.inflate(LayoutInflater.from(context), this)
     private lateinit var onClickListener: CustomButtonOnClickListener
 
-    private lateinit var backgroundTopDrawable: GradientDrawable
+    private lateinit var shadowBackgroundTopDrawable: GradientDrawable
 
-    private lateinit var backgroundBottomDrawable: GradientDrawable
+    private lateinit var shadowBackgroundBottomDrawable: GradientDrawable
 
     private lateinit var backgroundNormalDrawable: GradientDrawable
+
+    private lateinit var shadowBackgroundLayerDrawable: LayerDrawable
+    private lateinit var backgroundLayerDrawable: LayerDrawable
 
 
     var textpaddingStart: Int = 0
@@ -168,56 +170,62 @@ class DuolingoButton @JvmOverloads constructor(
 
     private fun setCornerRadius(value: Int) {
         val valueInDp = context.dpToPx(value.toFloat()).toFloat()
-        backgroundBottomDrawable.cornerRadius = valueInDp
-        backgroundTopDrawable.cornerRadius = valueInDp
+        shadowBackgroundBottomDrawable.cornerRadius = valueInDp
+        shadowBackgroundTopDrawable.cornerRadius = valueInDp
     }
 
-    fun setBackgroundShadowColor(color: Int) {
-        backgroundBottomDrawable.setColor(ContextCompat.getColor(context, color))
+    private fun setBackgroundShadowColor(color: Int) {
+        shadowBackgroundBottomDrawable.setColor(ContextCompat.getColor(context, color))
         setBackgroundDrawable()
     }
 
     private fun setTopBackgroundColor(color: Int) {
-        backgroundTopDrawable.setColor(ContextCompat.getColor(context, color))
+        shadowBackgroundTopDrawable.setColor(ContextCompat.getColor(context, color))
         backgroundNormalDrawable.setColor(ContextCompat.getColor(context, color))
         setBackgroundDrawable()
     }
 
     private fun setBackgroundDrawable() {
-        binding.buttonTextLayout.background =
-            ContextCompat.getDrawable(context, R.drawable.drawable_background_with_shadow)
+        binding.buttonTextLayout.background = shadowBackgroundLayerDrawable
     }
 
-    fun setButtonBackground(){
-        setTopBackgroundColor(buttonPrimaryColor)
-        setBackgroundShadowColor(buttonShadowColor)
+    fun setShadowBackground(){
+        shadowBackgroundBottomDrawable.setColor(ContextCompat.getColor(context, buttonShadowColor))
+        shadowBackgroundTopDrawable.setColor(ContextCompat.getColor(context, buttonPrimaryColor))
+        binding.buttonTextLayout.background = shadowBackgroundLayerDrawable
+    }
+
+    private fun setNormalBackground(){
+        backgroundNormalDrawable.setColor(ContextCompat.getColor(context, buttonPrimaryColor))
+        binding.buttonTextLayout.background = backgroundLayerDrawable
     }
 
     private fun setRelevantBackground() {
-        backgroundTopDrawable.setColor(buttonPrimaryColor)
+        shadowBackgroundTopDrawable.setColor(buttonPrimaryColor)
         backgroundNormalDrawable.setColor(buttonPrimaryColor)
-        backgroundBottomDrawable.setColor(buttonShadowColor)
+        shadowBackgroundBottomDrawable.setColor(buttonShadowColor)
         setCornerRadius(buttonRadius)
     }
 
     private fun initDrawables() {
-        val shape =
+        shadowBackgroundLayerDrawable =
             ContextCompat.getDrawable(
                 context,
                 R.drawable.drawable_background_with_shadow
             ) as LayerDrawable
 
-        backgroundTopDrawable = (shape.findDrawableByLayerId(R.id.top_drawable) as GradientDrawable)
-        backgroundBottomDrawable =
-            (shape.findDrawableByLayerId(R.id.bottom_drawable) as GradientDrawable)
+        shadowBackgroundTopDrawable = (shadowBackgroundLayerDrawable.findDrawableByLayerId(R.id.top_drawable) as GradientDrawable)
+        shadowBackgroundBottomDrawable =
+            (shadowBackgroundLayerDrawable.findDrawableByLayerId(R.id.bottom_drawable) as GradientDrawable)
 
-        val normalDrawable = ContextCompat.getDrawable(
+        backgroundLayerDrawable = ContextCompat.getDrawable(
             context,
             R.drawable.drawable_background_without_shadow
         ) as LayerDrawable
 
         backgroundNormalDrawable =
-            (normalDrawable.findDrawableByLayerId(R.id.top_drawable) as GradientDrawable)
+            (backgroundLayerDrawable.findDrawableByLayerId(R.id.top_drawable) as GradientDrawable)
+
     }
 
     fun changeDrawableColor(topColor: String, bottomColor: String, cornerRadius: Float) {
@@ -286,34 +294,27 @@ class DuolingoButton @JvmOverloads constructor(
 
     @SuppressLint("ClickableViewAccessibility")
     private fun initListeners() {
-        binding.buttonTextLayout.setOnTouchListener(object : View.OnTouchListener {
+        binding.buttonTextLayout.setOnTouchListener(object : OnTouchListener {
             override fun onTouch(v: View?, event: MotionEvent?): Boolean {
                 setRelevantBackground()
                 when (event!!.action) {
                     MotionEvent.ACTION_DOWN -> {
-                        binding.buttonTextLayout.background = ContextCompat.getDrawable(
-                            context,
-                            R.drawable.drawable_background_without_shadow
-                        )
-                        backgroundNormalDrawable.setColor(ContextCompat.getColor(context, buttonPrimaryColor))
-                        //buttonPrimaryColor = buttonPrimaryColor
+
+                        setNormalBackground()
+
                         binding.buttonTextLayout.setPadding(
                             binding.buttonTextLayout.paddingLeft,
                             binding.buttonTextLayout.paddingTop + context.dpToPx(4F),
                             binding.buttonTextLayout.paddingEnd,
                             binding.buttonTextLayout.paddingBottom - context.dpToPx(4F)
                         )
-                        return true;
+                        return true
                     }
 
                     MotionEvent.ACTION_CANCEL -> {
-                        binding.buttonTextLayout.background = ContextCompat.getDrawable(
-                            context,
-                            R.drawable.drawable_background_with_shadow
-                        )
-                        buttonPrimaryColor = buttonPrimaryColor
-                        buttonShadowColor = buttonShadowColor
-                        //setButtonBackground()
+
+                        setShadowBackground()
+
                         binding.buttonTextLayout.setPadding(
                             binding.buttonTextLayout.paddingLeft,
                             binding.buttonTextLayout.paddingTop - context.dpToPx(4F),
@@ -324,12 +325,7 @@ class DuolingoButton @JvmOverloads constructor(
 
                     MotionEvent.ACTION_UP -> {
 
-                        binding.buttonTextLayout.background = ContextCompat.getDrawable(
-                            context,
-                            R.drawable.drawable_background_with_shadow
-                        )
-                        buttonPrimaryColor = buttonPrimaryColor
-                        buttonShadowColor = buttonShadowColor
+                        setShadowBackground()
 
                         binding.buttonTextLayout.setPadding(
                             binding.buttonTextLayout.paddingLeft,
@@ -341,7 +337,7 @@ class DuolingoButton @JvmOverloads constructor(
                         if (::onClickListener.isInitialized) {
                             onClickListener.onClicked()
                         }
-                        return false;
+                        return false
                     }
                 }
                 return false
