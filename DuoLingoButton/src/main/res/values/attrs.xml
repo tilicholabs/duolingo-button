@@ -8,9 +8,8 @@
         <attr name="textPaddingBottom" format="integer" />
 
         <attr name="android:text" />
-        <attr name="textSize" format="float" />
+        <attr name="buttonTextSize" format="float" />
         <attr name="android:textColor" format="color" />
-        <attr name="textAppearance" format="reference" />
         <attr name="buttonCornerRadius" format="integer" />
         <attr name="primaryColor" format="reference" />
         <attr name="shadowColor" format="reference" />

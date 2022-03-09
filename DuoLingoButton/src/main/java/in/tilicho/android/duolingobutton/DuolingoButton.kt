@@ -2,7 +2,8 @@ package `in`.tilicho.android.duolingobutton
 
 import `in`.tilicho.android.duolingobutton.databinding.ViewDuolingoButtonBinding
 import `in`.tilicho.android.duolingobutton.interfaces.CustomButtonOnClickListener
-import `in`.tilicho.android.duolingobutton.utils.dp2Px
+import `in`.tilicho.android.duolingobutton.utils.dpToPx
+import `in`.tilicho.android.duolingobutton.utils.spToPx
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
@@ -43,7 +44,7 @@ class DuolingoButton @JvmOverloads constructor(
         set(value) {
             field = value
             binding.buttonTextLayout.setPadding(
-                pixelsToDpi(value),
+                context.dpToPx(value.toFloat()),
                 binding.buttonTextLayout.paddingTop,
                 binding.buttonTextLayout.paddingRight,
                 binding.buttonTextLayout.paddingBottom
@@ -53,11 +54,10 @@ class DuolingoButton @JvmOverloads constructor(
     var textpaddingEnd: Int = 0
         set(value) {
             field = value
-
             binding.buttonTextLayout.setPadding(
                 binding.buttonTextLayout.paddingLeft,
                 binding.buttonTextLayout.paddingTop,
-                pixelsToDpi(value),
+                context.dpToPx(value.toFloat()),
                 binding.buttonTextLayout.paddingBottom
             )
         }
@@ -67,7 +67,7 @@ class DuolingoButton @JvmOverloads constructor(
             field = value
             binding.buttonTextLayout.setPadding(
                 binding.buttonTextLayout.paddingLeft,
-                pixelsToDpi(value),
+                context.dpToPx(value.toFloat()),
                 binding.buttonTextLayout.paddingRight,
                 binding.buttonTextLayout.paddingBottom
             )
@@ -80,7 +80,7 @@ class DuolingoButton @JvmOverloads constructor(
                 binding.buttonTextLayout.paddingLeft,
                 binding.buttonTextLayout.paddingTop,
                 binding.buttonTextLayout.paddingRight,
-                pixelsToDpi(value)
+                context.dpToPx(value.toFloat())
             )
         }
 
@@ -90,29 +90,17 @@ class DuolingoButton @JvmOverloads constructor(
             binding.buttonTextView.setText(value)
         }
 
-    var buttonTextSize: Float = 24.toFloat()
+    var buttonTextSize: Float = 4.toFloat()
         set(value) {
             field = value
-            binding.buttonTextView.textSize =
-                value
+            binding.buttonTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP,value)
         }
 
     @ColorInt
     var buttonTextColor: Int = ContextCompat.getColor(context, R.color.black)
-        //resources.getColor(R.color.black,context.theme)
         set(value) {
             field = value
             binding.buttonTextView.setTextColor(value)
-        }
-
-    var buttonTextAppearance: Int? = null
-        set(value) {
-            field = value
-            if (value != null) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    binding.buttonTextView.setTextAppearance(value)
-                }
-            }
         }
 
     var buttonRadius: Int = 12
@@ -123,7 +111,6 @@ class DuolingoButton @JvmOverloads constructor(
 
     @ColorInt
     var buttonPrimaryColor: Int = ContextCompat.getColor(context, R.color.colorDefaultPrimary)
-        //R.color.colorDefaultPrimary
         set(value) {
             field = value
             setTopBackgroundColor(buttonPrimaryColor)
@@ -153,7 +140,7 @@ class DuolingoButton @JvmOverloads constructor(
     var buttonIcon: Int? = null
         set(value) {
             field = value
-            if (value != null) {
+            if (value != null && value != R.drawable.drawable_background_with_shadow) {
                 setCtaButtonIcon(value)
             } else {
                 binding.buttonIcon.visibility = View.GONE
@@ -167,7 +154,7 @@ class DuolingoButton @JvmOverloads constructor(
 
     private fun setImageSpacer(value: Int) {
         val layoutParams = binding.buttonIcon.layoutParams as LinearLayout.LayoutParams
-        layoutParams.marginEnd = context.dp2Px(value).toInt()
+        layoutParams.marginEnd = context.dpToPx(value.toFloat())
         binding.buttonIcon.layoutParams = layoutParams
     }
 
@@ -181,7 +168,7 @@ class DuolingoButton @JvmOverloads constructor(
 
 
     private fun setCornerRadius(value: Int) {
-        val valueInDp = context.dp2Px(value).toFloat()
+        val valueInDp = context.dpToPx(value.toFloat()).toFloat()
         backgroundBottomDrawable.cornerRadius = valueInDp
         backgroundTopDrawable.cornerRadius = valueInDp
     }
@@ -238,13 +225,13 @@ class DuolingoButton @JvmOverloads constructor(
 
         val changedBackground = (shape.findDrawableByLayerId(R.id.top_drawable) as GradientDrawable)
         changedBackground.setColor(Color.parseColor(topColor))
-        changedBackground.cornerRadius = context.dp2Px(cornerRadius.toInt()).toFloat()
+        changedBackground.cornerRadius = context.dpToPx(cornerRadius).toFloat()
 
         val updatedBackground =
             (shape.findDrawableByLayerId(R.id.bottom_drawable) as GradientDrawable)
         updatedBackground.setColor(Color.parseColor(bottomColor))
 
-        updatedBackground.cornerRadius = context.dp2Px(cornerRadius.toInt()).toFloat()
+        updatedBackground.cornerRadius = context.dpToPx(cornerRadius).toFloat()
 
         binding.buttonTextLayout.background =
             ContextCompat.getDrawable(context, R.drawable.drawable_background_with_shadow)
@@ -257,7 +244,7 @@ class DuolingoButton @JvmOverloads constructor(
         val normalChangedBackground =
             (normalDrawable.findDrawableByLayerId(R.id.top_drawable) as GradientDrawable)
         normalChangedBackground.setColor(Color.parseColor(topColor))
-        normalChangedBackground.cornerRadius = context.dp2Px(cornerRadius.toInt()).toFloat()
+        normalChangedBackground.cornerRadius = context.dpToPx(cornerRadius).toFloat()
 
     }
 
@@ -304,13 +291,13 @@ class DuolingoButton @JvmOverloads constructor(
                         binding.buttonTextLayout.background = ContextCompat.getDrawable(
                             context,
                             R.drawable.drawable_background_without_shadow
-                        )//getButtonWithOutBackground(buttonColor)
+                        )
 
                         binding.buttonTextLayout.setPadding(
                             binding.buttonTextLayout.paddingLeft,
-                            binding.buttonTextLayout.paddingTop + pixelsToDpi(4),
+                            binding.buttonTextLayout.paddingTop + context.dpToPx(4F),
                             binding.buttonTextLayout.paddingEnd,
-                            binding.buttonTextLayout.paddingBottom - pixelsToDpi(4)
+                            binding.buttonTextLayout.paddingBottom - context.dpToPx(4F)
                         )
                         return true;
                     }
@@ -319,13 +306,13 @@ class DuolingoButton @JvmOverloads constructor(
                         binding.buttonTextLayout.background = ContextCompat.getDrawable(
                             context,
                             R.drawable.drawable_background_with_shadow
-                        )//getButtonWithBackground(buttonColor)
+                        )
 
                         binding.buttonTextLayout.setPadding(
                             binding.buttonTextLayout.paddingLeft,
-                            binding.buttonTextLayout.paddingTop - pixelsToDpi(4),
+                            binding.buttonTextLayout.paddingTop - context.dpToPx(4F),
                             binding.buttonTextLayout.paddingEnd,
-                            binding.buttonTextLayout.paddingBottom + pixelsToDpi(4)
+                            binding.buttonTextLayout.paddingBottom + context.dpToPx(4F)
                         )
                     }
 
@@ -334,13 +321,13 @@ class DuolingoButton @JvmOverloads constructor(
                         binding.buttonTextLayout.background = ContextCompat.getDrawable(
                             context,
                             R.drawable.drawable_background_with_shadow
-                        )//getButtonWithBackground(buttonColor)
+                        )
 
                         binding.buttonTextLayout.setPadding(
                             binding.buttonTextLayout.paddingLeft,
-                            binding.buttonTextLayout.paddingTop - pixelsToDpi(4),
+                            binding.buttonTextLayout.paddingTop - context.dpToPx(4F),
                             binding.buttonTextLayout.paddingEnd,
-                            binding.buttonTextLayout.paddingBottom + pixelsToDpi(4)
+                            binding.buttonTextLayout.paddingBottom + context.dpToPx(4F)
                         )
 
                         if (::onClickListener.isInitialized) {
@@ -362,7 +349,7 @@ class DuolingoButton @JvmOverloads constructor(
         )
     }
 
-    fun pixelsToDpi(pixel: Int): Int {
+    fun dpToPx(pixel: Int): Int {
         //final float scale = getResources().getDisplayMetrics().density;
         val scale = context.resources.displayMetrics.density
         return (pixel * scale + 0.5f).toInt()
@@ -393,12 +380,13 @@ class DuolingoButton @JvmOverloads constructor(
                 R.styleable.DuolingoButton_textPaddingBottom,
                 binding.buttonTextLayout.paddingBottom
             )
+
             buttonText =
                 typedArray.getString(R.styleable.DuolingoButton_android_text).toString()
 
             buttonTextSize = typedArray.getFloat(
-                R.styleable.DuolingoButton_textSize,
-                pixelsToSpi(24)
+                R.styleable.DuolingoButton_buttonTextSize,
+                context.spToPx(24F).toFloat()
             )
 
             buttonTextColor = typedArray.getColor(
@@ -428,10 +416,6 @@ class DuolingoButton @JvmOverloads constructor(
                 )
             iconSpacer = typedArray.getInteger(R.styleable.DuolingoButton_iconSpacer, 8)
 
-            buttonTextAppearance = typedArray.getResourceId(
-                R.styleable.DuolingoButton_textAppearance,
-                R.style.TextAppearance_AppCompat
-            )
         } finally {
             typedArray.recycle()
         }

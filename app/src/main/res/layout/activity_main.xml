@@ -13,11 +13,11 @@
         app:buttonCornerRadius="8"
         android:text="Sample"
         android:textColor="@color/black"
-        app:textSize="16"
+        app:buttonTextSize="16"
         app:textPaddingBottom="13"
         app:textPaddingEnd="10"
         app:textPaddingTop="10"
-        app:textPaddingStart="113"
+        app:textPaddingStart="13"
         
         app:primaryColor="@color/colorDefaultPrimary"
         app:shadowColor="@color/colorDefaultShadow"
