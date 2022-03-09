@@ -18,9 +18,9 @@
         app:textPaddingEnd="10"
         app:textPaddingTop="10"
         app:textPaddingStart="13"
-        
-        app:primaryColor="@color/colorDefaultPrimary"
-        app:shadowColor="@color/colorDefaultShadow"
+
+        app:primaryColor="@android:color/holo_green_dark"
+        app:shadowColor="@android:color/darker_gray"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
