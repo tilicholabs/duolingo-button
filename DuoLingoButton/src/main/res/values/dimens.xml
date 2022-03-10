@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="four_dp">4dp</dimen>
+    <dimen name="eight_dp">8dp</dimen>
+
+    <dimen name="button_default_corner_radius">6dp</dimen>
+    <dimen name="button_shadow_bottom">6dp</dimen>
+</resources>

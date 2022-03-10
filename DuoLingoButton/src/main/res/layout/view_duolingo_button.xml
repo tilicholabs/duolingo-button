@@ -13,17 +13,17 @@
         android:layout_centerInParent="true"
         android:background="@drawable/drawable_background_with_shadow"
         android:gravity="center"
-        android:paddingStart="4dp"
-        android:paddingTop="8dp"
-        android:paddingEnd="4dp"
-        android:paddingBottom="8dp">
+        android:paddingStart="@dimen/four_dp"
+        android:paddingTop="@dimen/eight_dp"
+        android:paddingEnd="@dimen/four_dp"
+        android:paddingBottom="@dimen/eight_dp">
 
         <ImageView
             android:id="@+id/buttonIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="@dimen/eight_dp"
             android:visibility="gone" />
 
         <androidx.appcompat.widget.AppCompatTextView

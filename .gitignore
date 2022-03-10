@@ -14,3 +14,6 @@
 .gradle/buildOutputCleanup/buildOutputCleanup.lock
 .gradle/buildOutputCleanup/outputFiles.bin
 .idea/assetWizardSettings.xml
+.gradle/buildOutputCleanup/cache.properties
+*.properties
+.idea
