@@ -1,19 +1,35 @@
+# Gradle files
+.gradle/
+build/
+gradle/
 
-*.bin
-*.lock
-.idea/misc.xml
-.gradle/7.0.2/executionHistory/executionHistory.bin
-.gradle/7.0.2/executionHistory/executionHistory.lock
-.gradle/7.0.2/fileHashes/fileHashes.bin
-.gradle/7.0.2/fileHashes/fileHashes.lock
-.gradle/7.0.2/fileHashes/resourceHashesCache.bin
-.gradle/7.0.2/javaCompile/classAnalysis.bin
-.gradle/7.0.2/javaCompile/jarAnalysis.bin
-.gradle/7.0.2/javaCompile/javaCompile.lock
-.gradle/7.0.2/javaCompile/taskHistory.bin
-.gradle/buildOutputCleanup/buildOutputCleanup.lock
-.gradle/buildOutputCleanup/outputFiles.bin
-.idea/assetWizardSettings.xml
-.gradle/buildOutputCleanup/cache.properties
-*.properties
-.idea
+# Local configuration file (sdk path, etc)
+local.properties
+gradle.properties
+
+# Log/OS Files
+*.log
+
+# Android Studio generated files and folders
+captures/
+.externalNativeBuild/
+.cxx/
+*.apk
+output.json
+
+# IntelliJ
+*.iml
+.idea/
+misc.xml
+deploymentTargetDropDown.xml
+render.experimental.xml
+
+# Keystore files
+*.jks
+*.keystore
+
+# Google Services (e.g. APIs or Firebase)
+google-services.json
+
+# Android Profiling
+*.hprof
