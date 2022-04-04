@@ -1,0 +1,5 @@
+*.gpg
+.idea
+.gradle
+.DS_Store
+local.properties
