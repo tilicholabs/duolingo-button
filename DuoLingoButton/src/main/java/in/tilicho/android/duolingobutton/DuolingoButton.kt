@@ -10,7 +10,6 @@ import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.LayerDrawable
-import android.os.Build
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -40,7 +39,7 @@ class DuolingoButton @JvmOverloads constructor(
     private lateinit var backgroundNormalDrawable: GradientDrawable
 
 
-    var textpaddingStart: Int = 0
+    var buttonPaddingStart: Int = 0
         set(value) {
             field = value
             binding.buttonTextLayout.setPadding(
@@ -51,7 +50,7 @@ class DuolingoButton @JvmOverloads constructor(
             )
         }
 
-    var textpaddingEnd: Int = 0
+    var buttonPaddingEnd: Int = 0
         set(value) {
             field = value
             binding.buttonTextLayout.setPadding(
@@ -62,7 +61,7 @@ class DuolingoButton @JvmOverloads constructor(
             )
         }
 
-    var textpaddingTop: Int = 0
+    var buttonPaddingTop: Int = 0
         set(value) {
             field = value
             binding.buttonTextLayout.setPadding(
@@ -73,7 +72,7 @@ class DuolingoButton @JvmOverloads constructor(
             )
         }
 
-    var textpaddingBottom: Int = 0
+    var buttonPaddingBottom: Int = 0
         set(value) {
             field = value
             binding.buttonTextLayout.setPadding(
@@ -364,20 +363,20 @@ class DuolingoButton @JvmOverloads constructor(
     private fun parseCustomAttributes(attrs: AttributeSet?) {
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.DuolingoButton)
         try {
-            textpaddingStart = typedArray.getInt(
-                R.styleable.DuolingoButton_textPaddingStart,
+            buttonPaddingStart = typedArray.getInt(
+                R.styleable.DuolingoButton_buttonPaddingStart,
                 binding.buttonTextLayout.paddingLeft
             )
-            textpaddingEnd = typedArray.getInt(
-                R.styleable.DuolingoButton_textPaddingEnd,
+            buttonPaddingEnd = typedArray.getInt(
+                R.styleable.DuolingoButton_buttonPaddingEnd,
                 binding.buttonTextLayout.paddingEnd
             )
-            textpaddingTop = typedArray.getInt(
-                R.styleable.DuolingoButton_textPaddingTop,
+            buttonPaddingTop = typedArray.getInt(
+                R.styleable.DuolingoButton_buttonPaddingTop,
                 binding.buttonTextLayout.paddingTop
             )
-            textpaddingBottom = typedArray.getInt(
-                R.styleable.DuolingoButton_textPaddingBottom,
+            buttonPaddingBottom = typedArray.getInt(
+                R.styleable.DuolingoButton_buttonPaddingBottom,
                 binding.buttonTextLayout.paddingBottom
             )
 

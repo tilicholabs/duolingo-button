@@ -2,10 +2,10 @@
 <resources>
     <attr name="colorProgressBar" type="color" />
     <declare-styleable name="DuolingoButton">
-        <attr name="textPaddingStart" format="integer" />
-        <attr name="textPaddingEnd" format="integer" />
-        <attr name="textPaddingTop" format="integer" />
-        <attr name="textPaddingBottom" format="integer" />
+        <attr name="buttonPaddingStart" format="integer" />
+        <attr name="buttonPaddingEnd" format="integer" />
+        <attr name="buttonPaddingTop" format="integer" />
+        <attr name="buttonPaddingBottom" format="integer" />
 
         <attr name="android:text" />
         <attr name="buttonTextSize" format="float" />
