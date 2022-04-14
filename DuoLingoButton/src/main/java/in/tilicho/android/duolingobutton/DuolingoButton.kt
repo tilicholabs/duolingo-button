@@ -331,65 +331,65 @@ class DuolingoButton @JvmOverloads constructor(
 
     private fun parseCustomAttributes(attrs: AttributeSet?) {
 
-      context.obtainStyledAttributes(attrs, R.styleable.DuolingoButton)
-        try {
-            buttonPaddingStart = typedArray.getInt(
-                R.styleable.DuolingoButton_buttonPaddingStart,
-                binding.buttonTextLayout.paddingLeft
-            )
-            buttonPaddingEnd = typedArray.getInt(
-                R.styleable.DuolingoButton_buttonPaddingEnd,
-                binding.buttonTextLayout.paddingEnd
-            )
-            buttonPaddingTop = typedArray.getInt(
-                R.styleable.DuolingoButton_buttonPaddingTop,
-                binding.buttonTextLayout.paddingTop
-            )
-            buttonPaddingBottom = typedArray.getInt(
-                R.styleable.DuolingoButton_buttonPaddingBottom,
-                binding.buttonTextLayout.paddingBottom
-            )
+      context.obtainStyledAttributes(attrs, R.styleable.DuolingoButton).apply {
+          try {
+              buttonPaddingStart = getInt(
+                  R.styleable.DuolingoButton_buttonPaddingStart,
+                  binding.buttonTextLayout.paddingLeft
+              )
+              buttonPaddingEnd = getInt(
+                  R.styleable.DuolingoButton_buttonPaddingEnd,
+                  binding.buttonTextLayout.paddingEnd
+              )
+              buttonPaddingTop = getInt(
+                  R.styleable.DuolingoButton_buttonPaddingTop,
+                  binding.buttonTextLayout.paddingTop
+              )
+              buttonPaddingBottom = getInt(
+                  R.styleable.DuolingoButton_buttonPaddingBottom,
+                  binding.buttonTextLayout.paddingBottom
+              )
 
-                buttonText =
-                    getString(R.styleable.DuolingoButton_android_text).toString()
+              buttonText =
+                  getString(R.styleable.DuolingoButton_android_text).toString()
 
-                buttonTextSize = getFloat(
-                    R.styleable.DuolingoButton_buttonTextSize,
-                    context.spToPx(24F).toFloat()
-                )
+              buttonTextSize = getFloat(
+                  R.styleable.DuolingoButton_buttonTextSize,
+                  context.spToPx(24F).toFloat()
+              )
 
-                buttonTextColor = getColor(
-                    R.styleable.DuolingoButton_android_textColor,
-                    ContextCompat.getColor(context, R.color.black)
-                )
+              buttonTextColor = getColor(
+                  R.styleable.DuolingoButton_android_textColor,
+                  ContextCompat.getColor(context, R.color.black)
+              )
 
-                buttonRadius = getInteger(
-                    R.styleable.DuolingoButton_buttonCornerRadius,
-                    12
-                )
+              buttonRadius = getInteger(
+                  R.styleable.DuolingoButton_buttonCornerRadius,
+                  12
+              )
 
-                buttonPrimaryColor = getResourceId(
-                    R.styleable.DuolingoButton_primaryColor,
-                    R.color.colorDefaultPrimary
-                )
-                buttonShadowColor = getResourceId(
-                    R.styleable.DuolingoButton_shadowColor,
-                    R.color.colorDefaultShadow
-                )
-                //widthMatchParent = getBoolean(R.styleable.DuolingoButton_ctaFullButton,false)
+              buttonPrimaryColor = getResourceId(
+                  R.styleable.DuolingoButton_primaryColor,
+                  R.color.colorDefaultPrimary
+              )
+              buttonShadowColor = getResourceId(
+                  R.styleable.DuolingoButton_shadowColor,
+                  R.color.colorDefaultShadow
+              )
+              //widthMatchParent = getBoolean(R.styleable.DuolingoButton_ctaFullButton,false)
 
-                buttonIcon =
-                    getResourceId(
-                        R.styleable.DuolingoButton_icon,
-                        R.drawable.drawable_background_with_shadow
-                    )
-                iconSpacer = getInteger(R.styleable.DuolingoButton_iconSpacer, 8)
+              buttonIcon =
+                  getResourceId(
+                      R.styleable.DuolingoButton_icon,
+                      R.drawable.drawable_background_with_shadow
+                  )
+              iconSpacer = getInteger(R.styleable.DuolingoButton_iconSpacer, 8)
 
-            } finally {
-                recycle()
-            }
+          } finally {
+              recycle()
+          }
+      }
         }
-    }
 
     fun registerOnClickListener(onClickListener: CustomButtonOnClickListener) {
         this.onClickListener = onClickListener
