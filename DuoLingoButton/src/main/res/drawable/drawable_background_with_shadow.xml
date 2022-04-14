@@ -1,24 +1,21 @@
-
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-<item android:id="@+id/bottom_drawable">
-    <shape
-        android:padding="10dp"
-        android:shape="rectangle">
+    <item android:id="@+id/bottom_drawable">
+        <shape android:shape="rectangle">
 
-        <solid android:color="#BF8E00" />
-        <corners android:radius="8dp" />
+            <solid android:color="@color/colorDefaultShadow" />
+            <corners android:radius="@dimen/button_default_corner_radius" />
 
-    </shape>
-</item>
-<item android:bottom="6dp" android:id="@+id/top_drawable">
-    <shape
-        android:padding="10dp"
-        android:shape="rectangle">
+        </shape>
+    </item>
+    <item
+        android:id="@+id/top_drawable"
+        android:bottom="@dimen/button_shadow_bottom">
+        <shape android:shape="rectangle">
 
-        <solid android:color="#F7BE1F" />
-        <corners android:radius="8dp" />
+            <solid android:color="@color/colorDefaultPrimary" />
+            <corners android:radius="@dimen/button_default_corner_radius" />
 
-    </shape>
-</item>
+        </shape>
+    </item>
 </layer-list>
 
