@@ -42,7 +42,7 @@ class DuolingoButton @JvmOverloads constructor(
     private lateinit var shadowBackgroundLayerDrawable: LayerDrawable
     private lateinit var backgroundLayerDrawable: LayerDrawable
 
-    var textpaddingStart: Int = 0
+    var buttonPaddingStart: Int = 0
         set(value) {
             field = value
             binding.buttonTextLayout.setPadding(
@@ -53,7 +53,7 @@ class DuolingoButton @JvmOverloads constructor(
             )
         }
 
-    var textpaddingEnd: Int = 0
+    var buttonPaddingEnd: Int = 0
         set(value) {
             field = value
             binding.buttonTextLayout.setPadding(
@@ -64,7 +64,7 @@ class DuolingoButton @JvmOverloads constructor(
             )
         }
 
-    var textpaddingTop: Int = 0
+    var buttonPaddingTop: Int = 0
         set(value) {
             field = value
             binding.buttonTextLayout.setPadding(
@@ -75,7 +75,7 @@ class DuolingoButton @JvmOverloads constructor(
             )
         }
 
-    var textpaddingBottom: Int = 0
+    var buttonPaddingBottom: Int = 0
         set(value) {
             field = value
             binding.buttonTextLayout.setPadding(
@@ -330,24 +330,25 @@ class DuolingoButton @JvmOverloads constructor(
     }
 
     private fun parseCustomAttributes(attrs: AttributeSet?) {
-        context.obtainStyledAttributes(attrs, R.styleable.DuolingoButton).apply {
-            try {
-                textpaddingStart = getInt(
-                    R.styleable.DuolingoButton_textPaddingStart,
-                    binding.buttonTextLayout.paddingLeft
-                )
-                textpaddingEnd = getInt(
-                    R.styleable.DuolingoButton_textPaddingEnd,
-                    binding.buttonTextLayout.paddingEnd
-                )
-                textpaddingTop = getInt(
-                    R.styleable.DuolingoButton_textPaddingTop,
-                    binding.buttonTextLayout.paddingTop
-                )
-                textpaddingBottom = getInt(
-                    R.styleable.DuolingoButton_textPaddingBottom,
-                    binding.buttonTextLayout.paddingBottom
-                )
+
+      context.obtainStyledAttributes(attrs, R.styleable.DuolingoButton)
+        try {
+            buttonPaddingStart = typedArray.getInt(
+                R.styleable.DuolingoButton_buttonPaddingStart,
+                binding.buttonTextLayout.paddingLeft
+            )
+            buttonPaddingEnd = typedArray.getInt(
+                R.styleable.DuolingoButton_buttonPaddingEnd,
+                binding.buttonTextLayout.paddingEnd
+            )
+            buttonPaddingTop = typedArray.getInt(
+                R.styleable.DuolingoButton_buttonPaddingTop,
+                binding.buttonTextLayout.paddingTop
+            )
+            buttonPaddingBottom = typedArray.getInt(
+                R.styleable.DuolingoButton_buttonPaddingBottom,
+                binding.buttonTextLayout.paddingBottom
+            )
 
                 buttonText =
                     getString(R.styleable.DuolingoButton_android_text).toString()
